@@ -24,7 +24,7 @@ postgresql:
   postgresqlUsername: postgres
   postgresqlPassword: "changeme"
   persistence:
-    enabled: true
+    enabled: false
     storageClass: "standard"
 
 # More details on:

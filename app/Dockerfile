@@ -6,10 +6,10 @@ COPY ./godbweb /bin/dist/godbweb
 RUN chmod +x /bin/dist/godbweb
 
 # copy configure
-COPY conf.toml /bin/dist/conf.toml
+COPY conf.toml .
 
 # copy assets
-COPY assets /bin/dist/assets
+COPY assets .
 
 EXPOSE 3000
 
