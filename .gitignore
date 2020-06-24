@@ -45,3 +45,7 @@ override.tf.json
 # example: *tfplan*
 
 /ignore
+/app/godbwed
+/app/dist/
+/infra/charts/local-ecr/
+*.tgz

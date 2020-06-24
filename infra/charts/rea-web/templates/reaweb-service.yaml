@@ -4,8 +4,8 @@ metadata:
   name: {{ .Release.Name }}-reaweb
 spec:
   ports:
-    - port: 9292
-      targetPort: 9292
+    - port: 3000
+      targetPort: 3000
       protocol: TCP
   type: NodePort
   selector:

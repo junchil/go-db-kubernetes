@@ -15,6 +15,9 @@ spec:
       containers:
       - image: "{{ .Values.reaweb.image.repository }}:{{ .Values.reaweb.image.tag }}"
         imagePullPolicy: {{ .Values.reaweb.image.pullPolicy }}
+        command: ["/bin/dist/godbweb"]    # required to stop early exit
+        args: ["serve"]
+        stdin: true               # required to stop early exit
         name: reaweb
         ports:
-        - containerPort: 9292
+        - containerPort: 3000

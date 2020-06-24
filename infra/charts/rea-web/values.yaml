@@ -23,6 +23,9 @@ postgresql:
   enabled: true
   postgresqlUsername: postgres
   postgresqlPassword: "changeme"
+  persistence:
+    enabled: true
+    storageClass: "standard"
 
 # More details on:
 # https://github.com/helm/charts/blob/master/incubator/aws-alb-ingress-controller/values.yaml
