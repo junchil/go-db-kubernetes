@@ -1,0 +1,57 @@
+dist: xenial
+language: go
+go:
+  - 1.12.x
+
+services:
+  - docker
+
+cache:
+  directories:
+    - $HOME/gopath/pkg/mod
+
+env:
+  global:
+    - LOCAL_BIN=${HOME}/.local/bin # For downloaded tools like terraform and awscli
+    # Retrieve commit tag values for each micro-service folder to be used in tagging and deploying docker images.
+    # Dependency folders are included as well and must be maintained
+    - API_SERVER_TAG=$(git log --pretty=format:%h -n 1 -- api_server util)
+
+before_install:
+  - export PATH=$PATH:$HOME/gopath/bin  # Put travis go bin folder in path
+  - make common-deps                    # install dependencies from Makefile in the root
+
+script:
+  - set -e               # Stop script immediately on error
+  - cd $SERVICE_DIR
+  - export AWS_PROFILE=${TARGET_AWS_PROFILE}
+  - GO111MODULE=on go test -race -coverprofile=coverage.txt -covermode=atomic
+  - make check-image-exists && travis_terminate 0 || echo "Image doesn't exist, continue with build process";
+  - make goget
+  - make gotest
+  - make publish
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+# This governs the order of stage-execution
+stages:
+  - name: build
+
+jobs:
+  include:
+    # Building services
+    - stage: build
+      name: "🖐️ Common: Run tests for the common code"
+      script:
+        - travis_retry make common-depend
+        - make common-test
+      if: (branch = tag AND tag =~ /v\d+.\d+(.\d+)?/) OR (branch != tag)
+
+    - stage: build
+      name: "✍️ Godbweb: Build, test and publish the image"
+      env:
+        - SERVICE_DIR=app
+        - TARGET_AWS_PROFILE=AWS_STEVE
+        - COMMIT_HASH=${API_SERVER_TAG}
+      if: (branch = tag AND tag =~ /v\d+.\d+(.\d+)?/) OR (branch != tag)
