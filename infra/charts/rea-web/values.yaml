@@ -7,17 +7,17 @@ environment: Default
 testBox:
   enabled: true
   image:
-    repository: 675617749633.dkr.ecr.ap-southeast-2.amazonaws.com/web-kubernetes/rea-testbox
+    repository: 675617749633.dkr.ecr.ap-southeast-2.amazonaws.com/go-db-kubernetes/testbox
     tag: latest
     pullPolicy: Always
   replicas: 1
 
 reaweb:
   image:
-    repository: 675617749633.dkr.ecr.ap-southeast-2.amazonaws.com/web-kubernetes/rea-web-app
+    repository: 675617749633.dkr.ecr.ap-southeast-2.amazonaws.com/go-db-kubernetes/godbweb
     tag: latest
     pullPolicy: Always
-  replicas: 2
+  replicas: 1
 
 postgresql:
   enabled: true
