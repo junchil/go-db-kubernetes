@@ -19,9 +19,15 @@ reaweb:
     pullPolicy: Always
   replicas: 2
 
+postgresql:
+  enabled: true
+  postgresqlUsername: postgres
+  postgresqlPassword: "changeme"
+
 # More details on:
 # https://github.com/helm/charts/blob/master/incubator/aws-alb-ingress-controller/values.yaml
 albcontroller:
+  enabled: false
   clusterName: "reaCluster"
   autoDiscoverAwsRegion: true
   autoDiscoverAwsVpcID: true
@@ -51,7 +57,7 @@ albcontroller:
     serviceAccountName: alb-ingress
 
 externaldns:
-  enabled: true
+  enabled: false
   sources:
     - service
     - ingress
@@ -64,7 +70,7 @@ externaldns:
     create: true
 
 nginx:
-  enabled: true
+  enabled: false
   controller:
     config:
       use-forwarded-headers: "true"
