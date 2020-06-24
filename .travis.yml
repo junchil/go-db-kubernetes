@@ -48,3 +48,11 @@ jobs:
         - TARGET_AWS_PROFILE=AWS_STEVE
         - COMMIT_HASH=${API_SERVER_TAG}
       if: (branch = tag AND tag =~ /v\d+.\d+(.\d+)?/) OR (branch != tag)
+
+    - stage: build
+      name: "✍️ TESTBOX: Build, test and publish the image"
+      env:
+        - SERVICE_DIR=testbox
+        - TARGET_AWS_PROFILE=AWS_STEVE
+        - COMMIT_HASH=${TESTBOX_TAG}
+      if: (branch = tag AND tag =~ /v\d+.\d+(.\d+)?/) OR (branch != tag)
