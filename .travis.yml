@@ -42,13 +42,6 @@ jobs:
   include:
     # Building services
     - stage: build
-      name: "🖐️ Common: Run tests for the common code"
-      script:
-        - travis_retry make common-depend
-        - make common-test
-      if: (branch = tag AND tag =~ /v\d+.\d+(.\d+)?/) OR (branch != tag)
-
-    - stage: build
       name: "✍️ Godbweb: Build, test and publish the image"
       env:
         - SERVICE_DIR=app
