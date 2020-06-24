@@ -9,7 +9,7 @@ RUN chmod +x godbweb
 COPY conf.toml .
 
 # copy assets
-COPY assets .
+COPY assets /assets
 
 EXPOSE 3000
 
