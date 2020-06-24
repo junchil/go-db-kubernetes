@@ -28,6 +28,12 @@ endif
 GIT_BRANCH_SAFE = $(shell echo "$(GIT_BRANCH)" | tr -cs '[:alnum:].\-\n' '_')
 GIT_BRANCH_TAG = $(if $(filter master,$(GIT_BRANCH)),latest,$(GIT_BRANCH_SAFE))
 
+goget:
+	GO111MODULE=on go get ./...;
+
+gotest:
+	GO111MODULE=on go test ./...
+
 # make sure the ECR repository exists; this needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY which will be set in Travis CI
 docker-repo:
 	if ! aws --region $(AWS_REGION) ecr describe-repositories --repository-names $(ECR_REPO_NAME); then \
@@ -59,3 +65,5 @@ check-image-exists:
 	if [ "$$RESULT" = "null" ] || [ -z "$$RESULT" ]; then \
 		exit 1; \
 	fi
+
+.PHONY: test-setup test-cleanup deploy

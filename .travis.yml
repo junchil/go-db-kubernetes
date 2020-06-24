@@ -15,7 +15,8 @@ env:
     - LOCAL_BIN=${HOME}/.local/bin # For downloaded tools like terraform and awscli
     # Retrieve commit tag values for each micro-service folder to be used in tagging and deploying docker images.
     # Dependency folders are included as well and must be maintained
-    - API_SERVER_TAG=$(git log --pretty=format:%h -n 1 -- api_server util)
+    - GODBWEB=$(git log --pretty=format:%h -n 1 -- app)
+    - TESTBOX_TAG=$(git log --pretty=format:rc-%h -n 1 -- testbox)
 
 before_install:
   - export PATH=$PATH:$HOME/gopath/bin  # Put travis go bin folder in path
@@ -46,7 +47,7 @@ jobs:
       env:
         - SERVICE_DIR=app
         - TARGET_AWS_PROFILE=AWS_STEVE
-        - COMMIT_HASH=${API_SERVER_TAG}
+        - COMMIT_HASH=${GODBWEB}
       if: (branch = tag AND tag =~ /v\d+.\d+(.\d+)?/) OR (branch != tag)
 
     - stage: build
