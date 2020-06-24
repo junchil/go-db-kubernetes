@@ -2,8 +2,8 @@
 FROM ubuntu:bionic
 
 # copy binaries
-COPY ./godbweb /bin/dist/godbweb
-RUN chmod +x /bin/dist/godbweb
+COPY ./godbweb .
+RUN chmod +x godbweb
 
 # copy configure
 COPY conf.toml .
