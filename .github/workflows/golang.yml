@@ -1,0 +1,34 @@
+name: Check go mod and lint
+on: [pull_request]
+
+jobs:
+  check-tidy:
+    name: Check go mod tidy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.12
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Check go.mod and go.sum are tidy
+        run: make check-tidy
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: Run golangci-lint 1.23.8
+        uses: actions-contrib/golangci-lint@v1
+        with:
+          golangci_lint_version: 1.23.8

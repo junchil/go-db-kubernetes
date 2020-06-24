@@ -1,0 +1,9 @@
+app:
+  - app/**/*
+
+scritps: 
+  - scripts/**/*
+
+go-change:
+  - /**/*.go
+  - /**/*.mod
