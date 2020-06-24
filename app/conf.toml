@@ -2,6 +2,6 @@
 "DbPassword" = "changeme"
 "DbName" = "app"
 "DbPort" = "5432"
-"DbHost" = "localhost"
-"ListenHost" = "localhost"
+"DbHost" = "servian-postgresql"
+"ListenHost" = "servian-postgresql"
 "ListenPort" = "3000"
