@@ -30,7 +30,7 @@ postgresql:
 # More details on:
 # https://github.com/helm/charts/blob/master/incubator/aws-alb-ingress-controller/values.yaml
 albcontroller:
-  enabled: false
+  enabled: true
   clusterName: "reaCluster"
   autoDiscoverAwsRegion: true
   autoDiscoverAwsVpcID: true
@@ -60,7 +60,7 @@ albcontroller:
     serviceAccountName: alb-ingress
 
 externaldns:
-  enabled: false
+  enabled: true
   sources:
     - service
     - ingress
@@ -73,7 +73,7 @@ externaldns:
     create: true
 
 nginx:
-  enabled: false
+  enabled: true
   controller:
     config:
       use-forwarded-headers: "true"
