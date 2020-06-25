@@ -13,7 +13,7 @@ This repo builds a CICD pipeline for depolying this web application into EKS clu
 
 There is no manual task needed during this CICD process. The related travis build can be found through the build status.
 
-One of example for build from scratch: https://travis-ci.org/github/junchil/web-kubernetes/builds/700292258
+One of example for build from scratch: https://travis-ci.org/github/junchil/go-db-kubernetes/jobs/701943368
 
 Table of Contents                                                                                                                       
 ============================================
@@ -73,50 +73,60 @@ Bastion host:
 
 ```
 kubectl get po
-NAME                                                  READY   STATUS    RESTARTS   AGE
-reawebrelease-albcontroller-64bc5d66b9-6sjs8          1/1     Running   0          13h
-reawebrelease-externaldns-6bd6fb5cf7-zwcwl            1/1     Running   0          13h
-reawebrelease-nginx-controller-7f557dfcf9-b2xxh       1/1     Running   0          157m
-reawebrelease-nginx-default-backend-7569d789f-vsjcm   1/1     Running   0          13h
-reawebrelease-reaweb-5dd9d87b77-hsvp5                 1/1     Running   0          157m
-reawebrelease-reaweb-5dd9d87b77-xgg24                 1/1     Running   0          13h
-reawebrelease-testbox-67d8cd9c6-nmn87                 1/1     Running   0          13h
+NAME                                             READY   STATUS      RESTARTS   AGE
+pi-dgbmv                                         0/1     Completed   0          4m28s
+servian-albcontroller-67ddc8fbb6-wvx9t           1/1     Running     0          4m28s
+servian-externaldns-6bcf4d755b-mm62w             1/1     Running     0          4m28s
+servian-nginx-controller-8c7cbc6fd-z67r7         1/1     Running     0          4m28s
+servian-nginx-default-backend-85ffc485d8-bk9r4   1/1     Running     0          4m28s
+servian-postgresql-0                             1/1     Running     0          4m28s
+servian-reaweb-d77f64f89-ttvwq                   1/1     Running     0          4m18s
+servian-testbox-5dc9c48d7d-bjsfv                 1/1     Running     0          4m28s
 ```
 
 ```
 kubectl get deploy
-NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
-reawebrelease-albcontroller           1/1     1            1           14h
-reawebrelease-externaldns             1/1     1            1           14h
-reawebrelease-nginx-controller        1/1     1            1           14h
-reawebrelease-nginx-default-backend   1/1     1            1           14h
-reawebrelease-reaweb                  2/2     2            2           14h
-reawebrelease-testbox                 1/1     1            1           14h
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+servian-albcontroller           1/1     1            1           5m57s
+servian-externaldns             1/1     1            1           5m57s
+servian-nginx-controller        1/1     1            1           5m57s
+servian-nginx-default-backend   1/1     1            1           5m57s
+servian-reaweb                  1/1     1            1           5m57s
+servian-testbox                 1/1     1            1           5m57s
 ```
 
 ```
 kubectl get svc
-NAME                                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-kubernetes                            ClusterIP   172.20.0.1       <none>        443/TCP                      40h
-reawebrelease-externaldns             ClusterIP   172.20.161.112   <none>        7979/TCP                     13h
-reawebrelease-nginx-controller        NodePort    172.20.208.243   <none>        80:30959/TCP,443:30307/TCP   13h
-reawebrelease-nginx-default-backend   ClusterIP   172.20.32.31     <none>        80/TCP                       13h
-reawebrelease-reaweb                  NodePort    172.20.54.40     <none>        9292:31678/TCP               13h
+NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+kubernetes                      ClusterIP   172.20.0.1       <none>        443/TCP                      9m35s
+servian-externaldns             ClusterIP   172.20.75.5      <none>        7979/TCP                     6m17s
+servian-nginx-controller        NodePort    172.20.193.215   <none>        80:32079/TCP,443:30338/TCP   6m16s
+servian-nginx-default-backend   ClusterIP   172.20.125.90    <none>        80/TCP                       6m16s
+servian-postgresql              ClusterIP   172.20.117.121   <none>        5432/TCP                     6m16s
+servian-postgresql-headless     ClusterIP   None             <none>        5432/TCP                     6m17s
+servian-reaweb                  NodePort    172.20.126.35    <none>        3000:30055/TCP               6m16s
 ```
 
 ```
 kubectl get ingress
-NAME                        HOSTS   ADDRESS                                                                       PORTS   AGE
-reawebrelease-elb-ingress   *       ac97d66b-default-reawebrel-8f71-1282660860.ap-southeast-2.elb.amazonaws.com   80      14h
-reawebrelease-reaweb        *       10.0.148.82
+NAME                  HOSTS   ADDRESS                                                                       PORTS   AGE
+servian-elb-ingress   *       ac97d66b-default-servianel-92e9-1878420424.ap-southeast-2.elb.amazonaws.com   80      6m34s
+servian-reaweb        *       10.0.157.95   
 ```
 
 ```
 kubectl get nodes
-NAME                                              STATUS   ROLES    AGE   VERSION
-ip-10-0-148-82.ap-southeast-2.compute.internal    Ready    <none>   42h   v1.16.8-eks-e16311
-ip-10-0-162-59.ap-southeast-2.compute.internal    Ready    <none>   16h   v1.16.8-eks-e16311
-ip-10-0-188-140.ap-southeast-2.compute.internal   Ready    <none>   42h   v1.16.8-eks-e16311
+NAME                                             STATUS   ROLES    AGE    VERSION
+ip-10-0-157-95.ap-southeast-2.compute.internal   Ready    <none>   7m8s   v1.16.8-eks-e16311
+ip-10-0-161-51.ap-southeast-2.compute.internal   Ready    <none>   7m5s   v1.16.8-eks-e16311
+ip-10-0-187-81.ap-southeast-2.compute.internal   Ready    <none>   7m3s   v1.16.8-eks-e16311
+```
+
+This job is used for init postgresql.
+```
+sliu@MLB-LT-300175:/mnt/d/go/src/github.com/junchil/go-db-kubernetes/ignore$ kubectl get job
+NAME   COMPLETIONS   DURATION   AGE
+pi     1/1           62s        7m11s
 ```
 
 ## Reference

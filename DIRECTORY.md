@@ -9,7 +9,7 @@
 ├── infra/
 |   ├── charts/
 |   |   └── rea-web/
-|   |    
+|   |
 |   |── eks/
 |   |   ├── bastion-host/
 |   |   ├── cluster/
@@ -21,6 +21,8 @@
 |   |   └── version.tf
 |   |── terraform-state/
 |   └── Makefile
+|
+|── scripts/
 |
 ├── ssh-key/
 |   
@@ -46,6 +48,7 @@ An overview of what each of these does:
 | `vpc` | Terraform code for setup vpc |
 | `terraform-state` | Terraform code for setup terraform remote state |
 | `Makefile` | Deployment code for terraform and helm |
+| `scripts` | scripts folder |
 | `ssh-key` | Public key for bastion host ssh key |
 | `testbox` | Simple linux box for testing web service in cluster |
 | `Makefile` | Copy ssh key and setup AWS credentials |
